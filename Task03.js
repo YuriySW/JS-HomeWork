@@ -1,5 +1,5 @@
 const calculate = (total, quantity, promocode) => {
-  let excessDiscount = total;
+  const excessDiscount = total;
   let discount = 0;
   let difference = 0;
 
@@ -20,7 +20,9 @@ const calculate = (total, quantity, promocode) => {
     total += 500;
   }
 
-  return total > 0 ? console.log(`Cтоимость корзины товаров после применения всех акций и скидок: ${total + discount} рублей.`) : console.log(`Некорректный ввод`);
+  if (total > 0) {
+    return total + discount;
+  }
 };
 
-calculate(5000, 11, 'G3H2Z1');
+console.log(calculate(5000, 11, 'G3H2Z1'));
