@@ -3,6 +3,10 @@ const calculate = (total, quantity, promocode) => {
   let discount = 0;
   let difference = 0;
 
+  if (total < 0) {
+    return `Некорректный ввод`;
+  }
+
   if (quantity > 10) {
     discount += total * 0.03;
   }
@@ -20,9 +24,7 @@ const calculate = (total, quantity, promocode) => {
     total += 500;
   }
 
-  if (total > 0) {
-    return total + discount;
-  }
+  return total + discount;
 };
 
 console.log(calculate(5000, 11, 'G3H2Z1'));
