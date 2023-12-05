@@ -1,19 +1,12 @@
 const calculate = (total, quantity, promocode) => {
-  const excessDiscount = total;
   let discount = 0;
-  let difference = 0;
-
-  if (total < 0) {
-    return `Некорректный ввод`;
-  }
 
   if (quantity > 10) {
     discount += total * 0.03;
   }
 
   if (total > 30000) {
-    difference = excessDiscount - 30000;
-    discount += difference * 0.15;
+    discount += (total - 30000) * 0.15;
   }
 
   if (promocode === 'METHED') {
