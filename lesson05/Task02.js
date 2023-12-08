@@ -1,3 +1,15 @@
-const isPrime = (numSimple) => {};
+const isPrime = (num) => {
+  if (num <= 1) {
+    return false;
+  }
 
-console.log(isPrime(5));
+  for (let i = 2; i * i <= num; i++) {
+    if (num % i === 0) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+console.log(isPrime(1987));
