@@ -1,11 +1,16 @@
-const revers = (str) => {
-  let reversStr = '';
+const revers = (str) => str.trim().split('').reverse().join('');
+console.log(revers('Hello world'));
 
-  for (let i = str.length - 1; i >= 0; i--) {
-    reversStr += str[i];
-  }
+{
+  const revers = (str) => {
+    let reversStr = '';
 
-  return reversStr;
-};
+    for (let i = str.length - 1; i >= 0; i--) {
+      reversStr += str[i];
+    }
 
-console.log(revers('Привет мир'));
+    return reversStr;
+  };
+
+  console.log(revers('Привет мир'));
+}
