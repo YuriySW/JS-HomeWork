@@ -1,40 +1,34 @@
 'use strict';
 
-const game = () => {
-  let guessTheNumber;
-  const min = 1;
-  const max = 100;
-  let rnd = Math.floor(Math.random() * 100) + 1;
-  console.log(rnd);
+const min = 1;
+const max = 100;
+const random = Math.floor(Math.random() * 100) + 1;
+let state = true;
+console.log(random);
 
-  while (true) {
-    guessTheNumber = prompt(`Загадай число от ${min} до ${max}!`);
+while (state) {
+  const userData = prompt(`Загадай число от ${min} до ${max}!`);
+  const changeNumber = +userData;
 
-    if (guessTheNumber === null) {
+  switch (true) {
+    case userData === null:
       alert('Игра закончена');
+      state = false;
       break;
-    }
-
-    switch (true) {
-      case isNaN(+guessTheNumber):
-      case +guessTheNumber < min:
-      case +guessTheNumber > max:
-        alert(`Введите корректное число от ${min} до ${max}!`);
-        break;
-      case rnd > +guessTheNumber:
-        alert('Больше!');
-        break;
-      case rnd < +guessTheNumber:
-        alert('Меньше!');
-        break;
-      default:
-        alert('Правильно');
-    }
-
-    if (+guessTheNumber === rnd) {
+    case isNaN(changeNumber):
+    case changeNumber < min:
+    case changeNumber > max:
+      alert(`Введите корректное число от ${min} до ${max}!`);
       break;
-    }
+    case random > changeNumber:
+      alert('Больше!');
+      break;
+    case random < changeNumber:
+      alert('Меньше!');
+      break;
+
+    default:
+      alert('Правильно');
+      state = false;
   }
-};
-
-game();
+}

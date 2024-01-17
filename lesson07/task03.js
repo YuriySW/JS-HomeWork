@@ -1,26 +1,20 @@
 'use strict';
 
-const arrRandom = (arr, n, m, evenOdd) => {
-  const even = (num) => num % 2 === 0;
-  const odd = (num) => num % 2 !== 0;
-  let result = [];
-  let rndNum;
+const getArrRandom = (length, n, m, rules) => {
+  const result = [];
+  const min = Math.min(n, m);
+  const max = Math.max(n, m);
+  const mode = ['even', 'odd'].indexOf(rules);
 
-  for (var i = 0; i < arr; i++) {
-    rndNum = Math.floor(Math.random() * (Math.max(n, m) - Math.min(n, m) + 1)) + Math.min(n, m);
+  while (result.length < length) {
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
 
-    if (evenOdd === 'even' && !even(rndNum)) {
-      i--;
-      continue;
-    } else if (evenOdd === 'odd' && !odd(rndNum)) {
-      i--;
-      continue;
+    if (mode === -1 || Math.abs(num % 2) === mode) {
+      result.push(rndNum);
     }
-
-    result.push(rndNum);
   }
 
   return result;
 };
 
-console.log(arrRandom(140, -10, 20, 'even'));
+console.log(getArrRandom(140, -10, 20, 'even'));
