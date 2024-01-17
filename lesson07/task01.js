@@ -1,14 +1,14 @@
 'use strict';
 {
-  const arrRandom = (arr) => {
+  const getArrRandom = (length) => {
     let result = [];
 
-    for (var i = 0; i < arr; i++) {
+    for (let i = 0; i < length; i++) {
       result.push(Math.floor(Math.random() * 100));
     }
 
     return result;
   };
 
-  console.log(arrRandom(7));
+  console.log(getArrRandom(7));
 }
