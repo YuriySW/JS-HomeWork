@@ -15,7 +15,7 @@ while (state) {
       alert('Игра закончена');
       state = false;
       break;
-    case isNaN(userNumberNumber):
+    case isNaN(userNumber):
     case userNumber < min:
     case userNumber > max:
       alert(`Введите корректное число от ${min} до ${max}!`);
