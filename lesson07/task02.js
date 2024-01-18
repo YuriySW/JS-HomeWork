@@ -2,7 +2,7 @@
 
 {
   const getArrRandom = (length, n, m) => {
-    let result = [];
+    const result = [];
     const min = Math.min(n, m);
     const max = Math.max(n, m);
 
