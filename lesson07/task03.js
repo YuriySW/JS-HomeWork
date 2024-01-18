@@ -10,7 +10,7 @@ const getArrRandom = (length, n, m, rules) => {
     const random = Math.floor(Math.random() * (max - min + 1)) + min;
 
     if (mode === -1 || Math.abs(num % 2) === mode) {
-      result.push(rndNum);
+      result.push(random);
     }
   }
 

@@ -1,7 +1,7 @@
 'use strict';
 {
   const getArrRandom = (length) => {
-    let result = [];
+    const result = [];
 
     for (let i = 0; i < length; i++) {
       result.push(Math.floor(Math.random() * 100));
