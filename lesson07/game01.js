@@ -7,23 +7,22 @@ let state = true;
 console.log(random);
 
 while (state) {
-  const userData = prompt(`Загадай число от ${min} до ${max}!`);
-  const userNumber = +userData;
+  const userNumber = prompt(`Загадай число от ${min} до ${max}!`);
 
   switch (true) {
-    case userData === null:
+    case userNumber === null:
       alert('Игра закончена');
       state = false;
       break;
     case isNaN(userNumber):
-    case userNumber < min:
-    case userNumber > max:
+    case +userNumber < min:
+    case +userNumber > max:
       alert(`Введите корректное число от ${min} до ${max}!`);
       break;
-    case random > userNumber:
+    case random > +userNumber:
       alert('Больше!');
       break;
-    case random < userNumber:
+    case random < +userNumber:
       alert('Меньше!');
       break;
 
