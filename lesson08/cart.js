@@ -13,7 +13,7 @@ const cart = {
     this.items.push({
       productName,
       productPrice,
-      productCount: productCount,
+      productCount,
     });
     this.increaseCount(productCount);
     this.calculateItemPrice();
