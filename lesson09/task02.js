@@ -24448,8 +24448,8 @@ const listIPv4 = [
   '10.0.32.20',
 ];
 
-const returnUniqIpCount = (obj) => {
-  return Array.from(new Set(obj)).length;
+const returnUniqIpCount = (listIp) => {
+  return Array.from(new Set(listIp)).length;
 };
 
 console.log(returnUniqIpCount(listIPv4));

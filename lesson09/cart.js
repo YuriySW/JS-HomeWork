@@ -43,6 +43,6 @@ const cart = {
 };
 
 cart.add('Fanta', 100, 'w');
-cart.add('Cola', 200, 2);
-cart.add('Sprite', 300, 3);
+cart.add('Cola', 200, 1);
+cart.add('Sprite', 300, 1);
 cart.print();
