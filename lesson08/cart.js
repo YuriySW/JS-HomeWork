@@ -6,49 +6,44 @@ const cart = {
   count: 0,
 
   getTotalPrice() {
-    return console.log(this.totalPrice);
+    return this.totalPrice;
   },
 
-  add(productName, productPrice, productCount) {
-    this.calculateItemPrice();
-    this.increaseCount(productCount);
+  add(productName, productPrice, productCount = 1) {
+    if (isNaN(productCount) || productCount <= 0) {
+      productCount = 1;
+    }
 
-    return this.items.push({
+    this.items.push({
       productName,
       productPrice,
-      productCount: productCount ?? 1,
+      productCount,
     });
+    this.increaseCount(productCount);
+    this.calculateItemPrice();
   },
 
-  increaseCount(number) {
-    this.count += number;
+  increaseCount(num) {
+    this.count += num;
   },
 
   calculateItemPrice() {
     this.totalPrice = this.items.reduce((acc, item) => {
       return acc + item.productPrice * item.productCount;
     }, 0);
-    return this.totalPrice;
   },
 
   clear() {
-    for (let key of Object.keys(this)) {
-      if (this.items.length > 1) {
-        this[key] = [];
-      } else {
-        this[key] = 0;
-      }
-    }
+    this.items.length = this.totalPrice = this.count = 0;
   },
 
   print() {
-    this.calculateItemPrice();
     console.log(JSON.stringify(this.items));
-    return console.log(`Общая стоимость корзины: ${this.totalPrice}`);
+    console.log(`Общая стоимость корзины: ${this.totalPrice}`);
   },
 };
 
-cart.add('Fanta', 102, 4);
+cart.add('Fanta', 102, 's');
 cart.add('Cola', 115, 3);
-cart.add('Sprite', 120, 2);
+cart.add('Sprite', 120, 3);
 cart.print();
