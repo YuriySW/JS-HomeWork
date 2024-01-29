@@ -10,6 +10,10 @@ const cart = {
   },
 
   add(productName, productPrice, productCount = 1) {
+    if (isNaN(productCount) || productCount <= 0) {
+      productCount = 1;
+    }
+
     this.items.push({
       productName,
       productPrice,
@@ -19,8 +23,8 @@ const cart = {
     this.calculateItemPrice();
   },
 
-  increaseCount(number) {
-    this.count += number;
+  increaseCount(num) {
+    this.count += num;
   },
 
   calculateItemPrice() {
@@ -39,7 +43,7 @@ const cart = {
   },
 };
 
-cart.add('Fanta', 102, 4);
+cart.add('Fanta', 102, 's');
 cart.add('Cola', 115, 3);
 cart.add('Sprite', 120, 3);
 cart.print();
