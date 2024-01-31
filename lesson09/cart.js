@@ -28,8 +28,8 @@ const cart = {
 
   calculateItemPrice() {
     return this.items.reduce(
-      (acc, item) => acc + item.productPrice * item.productCount,
-      0
+        (acc, item) => acc + item.productPrice * item.productCount,
+        0,
     );
   },
 
