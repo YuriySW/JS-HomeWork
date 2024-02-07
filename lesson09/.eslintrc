@@ -4,7 +4,7 @@
     "es6": true,
     "node": true
   },
-  "extends": ["eslint:recommended"],
+  "extends": ["eslint:recommended", "prettier"],
   "parserOptions": {
     "parser": "babel-eslint",
     "ecmaVersion": "latest"
@@ -145,7 +145,7 @@
     "max-len": [
       "error",
       {
-        "code": 80,
+        "code": 100,
         "tabWidth": 2,
         "ignoreUrls": true,
         "ignorePattern": "goog.(module|require)"
