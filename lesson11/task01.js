@@ -3,7 +3,6 @@
 const min = 1;
 const max = 100;
 const random = Math.floor(Math.random() * 100) + 1;
-console.log(random);
 
 const game = () => {
   const userNumber = prompt(`Загадай число от ${min} до ${max}!`);
