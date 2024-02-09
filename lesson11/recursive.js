@@ -1,5 +1,7 @@
 'use strict';
 
+// Задача #1
+
 const min = 1;
 const max = 100;
 const random = Math.floor(Math.random() * 100) + 1;
@@ -32,3 +34,24 @@ const game = () => {
 };
 
 game();
+
+// Задача #2
+
+const arr = [];
+
+const recursiveFunc = (arr) => {
+  const random = Math.floor(Math.random() * 10);
+  arr.push(random);
+
+  const sum = arr.reduce((acc, val) => acc + val, 0);
+
+  if (sum < 50) {
+    return recursiveFunc(arr);
+  }
+
+  if (sum >= 50) {
+    return arr;
+  }
+};
+
+console.log(recursiveFunc(arr));
