@@ -2,14 +2,14 @@
 
 const arr = [];
 
-const recFunc = (arr) => {
+const recursiveFunc = (arr) => {
   const random = Math.floor(Math.random() * 10);
   arr.push(random);
 
   const sum = arr.reduce((acc, val) => acc + val, 0);
 
   if (sum < 50) {
-    return recFunc(arr);
+    return recursiveFunc(arr);
   }
 
   if (sum >= 50) {
@@ -17,4 +17,4 @@ const recFunc = (arr) => {
   }
 };
 
-console.log(recFunc(arr));
+console.log(recursiveFunc(arr));
