@@ -2,11 +2,11 @@
 
 // Задача #1
 
-const min = 1;
-const max = 100;
 const random = Math.floor(Math.random() * 100) + 1;
 
 const game = () => {
+  const min = 1;
+  const max = 100;
   const userNumber = prompt(`Загадай число от ${min} до ${max}!`);
 
   switch (true) {
@@ -38,20 +38,23 @@ game();
 // Задача #2
 
 const arr = [];
+const arr2 = [7, 9, 4, 4, 4, 2, 4, 4, 8, 2, 4];
 
 const recursiveFunc = (arr) => {
   const random = Math.floor(Math.random() * 10);
-  arr.push(random);
-
   const sum = arr.reduce((acc, val) => acc + val, 0);
-
-  if (sum < 50) {
-    return recursiveFunc(arr);
-  }
+  let newArray = [];
 
   if (sum >= 50) {
-    return arr;
+    return (newArray = [...arr]);
+  } else {
+    newArray = [...arr];
+    newArray.push(random);
+    return recursiveFunc(newArray);
   }
 };
 
 console.log(recursiveFunc(arr));
+console.log(recursiveFunc(arr2));
+console.log(arr);
+console.log(arr2);

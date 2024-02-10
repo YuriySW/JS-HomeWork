@@ -60,6 +60,10 @@ const cart = {
   },
 
   set discount(promocode) {
+    if (promocode !== 'METHED' || promocode !== 'NEWYEAR') {
+      this._discount = 0;
+    }
+
     if (promocode === 'METHED') {
       this._discount = 15;
     }
@@ -95,4 +99,5 @@ cart.add('Fanta', 100, 'w');
 cart.add('Cola', 200, 1);
 cart.add('Sprite', 300, 1);
 cart.discount = 'NEWYEAR';
+cart.discount = 'FIGNYA';
 cart.print();
