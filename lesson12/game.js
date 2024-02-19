@@ -13,7 +13,6 @@
     const result = {
       player: 0,
       computer: 0,
-      draw: 0,
     };
 
     return function start() {
@@ -25,9 +24,7 @@
       const gameExit = () => {
         const exit = confirm('Точно ли вы хотите выйти?');
         if (exit) {
-          return alert(
-            `Результат:\n Компьютер: ${result.computer}\n Игрок: ${result.player}\n Ничья: ${result.draw}`
-          );
+          return alert(`Результат:\n Компьютер: ${result.computer}\n Игрок: ${result.player}\n`);
         } else {
           return start();
         }
@@ -62,7 +59,6 @@
 
       if (userWord === randomWordComputer) {
         whoWin = 'Ничья';
-        result.draw++;
         alertWindow();
         return start();
       } else if (
