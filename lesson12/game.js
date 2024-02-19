@@ -33,6 +33,9 @@
         }
       };
 
+      const alertWindow = () =>
+        alert(`Компьютер:${randomWordComputer}\nВы:${userWord}\n${whoWin}\n`);
+
       if (userWord !== null) {
         switch (userWord.toLowerCase()) {
           case 'к':
@@ -60,6 +63,8 @@
       if (userWord === randomWordComputer) {
         whoWin = 'Ничья';
         result.draw++;
+        alertWindow();
+        return start();
       } else if (
         (userWord === 'камень' && randomWordComputer === 'ножницы') ||
         (userWord === 'ножницы' && randomWordComputer === 'бумага') ||
@@ -72,7 +77,7 @@
         result.computer++;
       }
 
-      alert(`Компьютер:${randomWordComputer}\nВы:${userWord}\n${whoWin}\n`);
+      alertWindow();
 
       const agreement = confirm('Ещё?');
       if (agreement) {
