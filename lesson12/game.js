@@ -23,6 +23,7 @@
 
       const gameExit = () => {
         const exit = confirm('Точно ли вы хотите выйти?');
+
         if (exit) {
           return alert(`Результат:\n Компьютер: ${result.computer}\n Игрок: ${result.player}\n`);
         } else {
