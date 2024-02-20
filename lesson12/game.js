@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const FIGURES_ENG = ['rock', 'scissors', 'paper'];
   const FIGURES_RUS = ['камень', 'ножницы', 'бумага'];
 
   const getRandomIntInclusive = (min, max) => {
@@ -9,16 +10,24 @@
     return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
   };
 
-  const game = () => {
+  const game = (language) => {
     const result = {
       player: 0,
       computer: 0,
     };
 
+    const lang = language === 'EN' || language === 'ENG' ? FIGURES_ENG : FIGURES_RUS;
+
     return function start() {
-      const randomIndex = getRandomIntInclusive(0, FIGURES_RUS.length - 1);
-      const randomWordComputer = FIGURES_RUS[randomIndex];
-      let userWord = prompt('Камень, ножницы, бумага?');
+      const randomWordComputer = getRandomIntInclusive(0, 3);
+      let userWord;
+
+      if (lang === FIGURES_ENG) {
+        userWord = prompt('rock, scissors,paper?');
+      } else {
+        userWord = prompt('Камень, ножницы, бумага?');
+      }
+
       let whoWin;
 
       const gameExit = () => {
@@ -32,22 +41,16 @@
       };
 
       const alertWindow = () =>
-        alert(`Компьютер:${randomWordComputer}\nВы:${userWord}\n${whoWin}\n`);
+        alert(`Компьютер:${FIGURES_RUS[randomWordComputer]}\nВы:${userWord}\n${whoWin}\n`);
 
       if (userWord !== null) {
         switch (userWord.toLowerCase()) {
-          case 'к':
-          case 'кам':
           case 'камень':
             userWord = 'камень';
             break;
-          case 'н':
-          case 'нож':
           case 'ножницы':
             userWord = 'ножницы';
             break;
-          case 'б':
-          case 'бум':
           case 'бумага':
             userWord = 'бумага';
             break;
@@ -58,14 +61,14 @@
         return gameExit();
       }
 
-      if (userWord === randomWordComputer) {
+      if (userWord === FIGURES_RUS[randomWordComputer]) {
         whoWin = 'Ничья';
         alertWindow();
         return start();
       } else if (
-        (userWord === 'камень' && randomWordComputer === 'ножницы') ||
-        (userWord === 'ножницы' && randomWordComputer === 'бумага') ||
-        (userWord === 'бумага' && randomWordComputer === 'камень')
+        (userWord === FIGURES_RUS[0] && FIGURES_RUS[randomWordComputer] === FIGURES_RUS[1]) ||
+        (userWord === FIGURES_RUS[1] && FIGURES_RUS[randomWordComputer] === FIGURES_RUS[2]) ||
+        (userWord === FIGURES_RUS[2] && FIGURES_RUS[randomWordComputer] === FIGURES_RUS[0])
       ) {
         whoWin = 'Вы выиграли';
         result.player++;
