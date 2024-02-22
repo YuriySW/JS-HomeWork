@@ -63,13 +63,6 @@
 
       alertWindow();
       confirm('Ещё?') ? start() : gameExit();
-
-      // const agreement = confirm('Ещё?');
-      // if (agreement) {
-      //   return start();
-      // } else {
-      //   return gameExit();
-      // }
     };
   };
   window.RPS = game;
