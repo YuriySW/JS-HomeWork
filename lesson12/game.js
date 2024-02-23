@@ -49,11 +49,7 @@
         return start();
       }
 
-      if (
-        (userWord === 0 && randomComputer === 1) ||
-        (userWord === 1 && randomComputer === 2) ||
-        (userWord === 2 && randomComputer === 0)
-      ) {
+      if ((userWord + 1) % 3 === randomComputer) {
         whoWin = 'Вы выиграли';
         result.player++;
       } else {
