@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const FIGURES_ENG = ['rock', 'scissors', 'paper'];
   const FIGURES_RUS = ['камень', 'ножницы', 'бумага'];
 
   const getRandomIntInclusive = (min, max) => {
@@ -9,62 +10,46 @@
     return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
   };
 
-  const game = () => {
+  const game = (language) => {
+    const lang = language === 'EN' || language === 'ENG' ? FIGURES_ENG : FIGURES_RUS;
     const result = {
       player: 0,
       computer: 0,
-      draw: 0,
     };
 
     return function start() {
-      const randomIndex = getRandomIntInclusive(0, FIGURES_RUS.length - 1);
-      const randomWordComputer = FIGURES_RUS[randomIndex];
-      let userWord = prompt('Камень, ножницы, бумага?');
+      const randomComputer = getRandomIntInclusive(0, 2);
+      let userWord;
       let whoWin;
+      userWord = prompt(`${lang}?`);
 
       const gameExit = () => {
-        const exit = confirm('Точно ли вы хотите выйти?');
-        if (exit) {
-          return alert(
-            `Результат:\n Компьютер: ${result.computer}\n Игрок: ${result.player}\n Ничья: ${result.draw}`
-          );
-        } else {
-          return start();
-        }
+        confirm('Точно ли вы хотите выйти?')
+          ? alert(`Результат:\n Компьютер: ${result.computer}\n Игрок: ${result.player}\n`)
+          : start();
       };
 
+      const alertWindow = () =>
+        alert(`Компьютер:${lang[randomComputer]}\nВы:${lang[userWord]}\n${whoWin}\n`);
+
       if (userWord !== null) {
-        switch (userWord.toLowerCase()) {
-          case 'к':
-          case 'кам':
-          case 'камень':
-            userWord = 'камень';
-            break;
-          case 'н':
-          case 'нож':
-          case 'ножницы':
-            userWord = 'ножницы';
-            break;
-          case 'б':
-          case 'бум':
-          case 'бумага':
-            userWord = 'бумага';
-            break;
-          default:
-            return start();
+        const userIndex = lang.indexOf(userWord.toLowerCase());
+        if (userIndex !== -1) {
+          userWord = userIndex;
+        } else {
+          return start();
         }
       } else {
         return gameExit();
       }
 
-      if (userWord === randomWordComputer) {
+      if (userWord === randomComputer) {
         whoWin = 'Ничья';
-        result.draw++;
-      } else if (
-        (userWord === 'камень' && randomWordComputer === 'ножницы') ||
-        (userWord === 'ножницы' && randomWordComputer === 'бумага') ||
-        (userWord === 'бумага' && randomWordComputer === 'камень')
-      ) {
+        alertWindow();
+        return start();
+      }
+
+      if ((userWord + 1) % 3 === randomComputer) {
         whoWin = 'Вы выиграли';
         result.player++;
       } else {
@@ -72,14 +57,8 @@
         result.computer++;
       }
 
-      alert(`Компьютер:${randomWordComputer}\nВы:${userWord}\n${whoWin}\n`);
-
-      const agreement = confirm('Ещё?');
-      if (agreement) {
-        return start();
-      } else {
-        return gameExit();
-      }
+      alertWindow();
+      confirm('Ещё?') ? start() : gameExit();
     };
   };
   window.RPS = game;
