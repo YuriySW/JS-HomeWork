@@ -76,7 +76,7 @@
         userOdd = userOdd.toLowerCase() === 'нечетное' ? 1 : 2;
         if (endGame) {
           const oddEvenUser = !isNaN(userOdd) ? userOdd : gameOddEven();
-          processTurn(randomComputer, userOdd);
+          processTurn(randomComputer, oddEvenUser);
         }
       }
 
@@ -113,7 +113,7 @@
         start();
       }
 
-      if ((userRSP + 1) % 3 === randomRSP) {
+      if (userRSP !== null && (userRSP + 1) % 3 === randomRSP) {
         alert('Вы выиграли');
         gameNumbers();
       }
@@ -123,9 +123,7 @@
         gameOddEven();
       }
 
-      if (!endGame) {
-        confirm('Хотите сыграть еще?') ? newGame() : alert(`Конец!`);
-      }
+      confirm('Хотите сыграть еще?') ? newGame() : alert(`Конец!`);
     };
   };
   window.RPS = game;
