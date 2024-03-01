@@ -2,6 +2,8 @@
 
 (() => {
   const rsp = ['камень', 'ножницы', 'бумага'];
+  let exitCount = 0;
+  let playStart = false;
 
   const getRandomIntInclusive = (min, max) => {
     const minCeiled = Math.ceil(min);
@@ -14,19 +16,33 @@
       player: 5,
       computer: 5,
     };
-    let endGame = true;
+    const newGame = () => {
+      exitCount = 0;
+      numbersOfBalls.player = 5;
+      numbersOfBalls.computer = 5;
+    };
+
+    const gameExit = (func) => {
+      confirm('Точно ли вы хотите выйти?')
+        ? alert(
+            `Количество шариков:\n Компьютер: ${numbersOfBalls.computer}\n Игрок: ${numbersOfBalls.player}\n`
+          )
+        : func();
+    };
 
     const processTurn = (userOdd, userNum) => {
       const random = Math.floor(Math.random() * 2) + 1;
       const isOdd = userNum % 2 !== 0;
+      const canGuessEven =
+        (numbersOfBalls.computer === 1 || numbersOfBalls.player === 1) && userNum === 2;
 
-      if (random === 1 && isOdd) {
-        numbersOfBalls.computer += userNum || userOdd;
-        numbersOfBalls.player -= userNum || userOdd;
-      } else {
-        numbersOfBalls.player += userNum || userOdd;
-        numbersOfBalls.computer -= userNum || userOdd;
-      }
+      random === 1 && (isOdd || canGuessEven)
+        ? ((userNum = Math.min(numbersOfBalls.computer, numbersOfBalls.player, userNum)),
+          (numbersOfBalls.computer += userNum || userOdd),
+          (numbersOfBalls.player -= userNum || userOdd))
+        : ((userNum = Math.min(numbersOfBalls.computer, numbersOfBalls.player, userNum)),
+          (numbersOfBalls.player += userNum || userOdd),
+          (numbersOfBalls.computer -= userNum || userOdd));
     };
 
     const alertWindow = () =>
@@ -34,97 +50,116 @@
 
     const whoWin = () => {
       if (numbersOfBalls.computer <= 0) {
-        alert('Выйграл игрок');
-        return (endGame = false);
+        alert('Выиграл игрок');
+        alertWindow();
+        return false;
       }
 
       if (numbersOfBalls.player <= 0) {
-        alert('Выйграл бот');
-        return (endGame = false);
+        alert('Выиграл бот');
+        alertWindow();
+        return false;
       }
+      return true;
     };
 
     const gameNumbers = () => {
       alertWindow();
       let userNum = prompt(`Загадайте число от 1 до ${numbersOfBalls.player}`);
+
       if (userNum === null) {
-        return (endGame = false);
-      } else {
-        userNum = +userNum;
-        if (!isNaN(userNum)) {
-          processTurn(userNum, userNum);
-        } else {
-          gameNumbers();
-        }
+        gameExit(gameNumbers);
+        exitCount++;
+        return;
       }
 
-      if (numbersOfBalls.computer <= 0 || numbersOfBalls.player <= 0) {
-        whoWin();
-      } else {
-        gameOddEven();
+      userNum = +userNum;
+      if (isNaN(userNum) || userNum < 1 || userNum > numbersOfBalls.player) {
+        alert('Некорректное число');
+        gameNumbers();
+        return;
       }
+
+      processTurn(userNum, userNum);
+
+      if (!whoWin()) {
+        return;
+      }
+
+      gameOddEven();
     };
 
     const gameOddEven = () => {
       alertWindow();
       const randomComputer = getRandomIntInclusive(1, numbersOfBalls.computer);
-      let userOdd = prompt(`Введите четное или нечетное!`);
+      const userOdd = confirm('Нажмите "ОК", если число четное, "Отмена" если нечетное');
 
-      if (userOdd === null) {
-        return (endGame = false);
-      } else {
-        userOdd = userOdd.toLowerCase() === 'нечетное' ? 1 : 2;
-        if (endGame) {
-          const oddEvenUser = !isNaN(userOdd) ? userOdd : gameOddEven();
-          processTurn(randomComputer, oddEvenUser);
-        }
+      processTurn(randomComputer, userOdd ? 2 : 1);
+
+      if (!whoWin()) {
+        return;
       }
 
-      if (numbersOfBalls.computer <= 0 || numbersOfBalls.player <= 0) {
-        whoWin();
-      } else {
-        gameNumbers();
-      }
+      gameNumbers();
     };
 
-    return function start() {
-      const randomRSP = getRandomIntInclusive(0, 2);
-      const newGame = () => {
-        numbersOfBalls.player = 5;
-        numbersOfBalls.computer = 5;
-        start();
-      };
-
+    const rspGame = () => {
       let userRSP = prompt(`${rsp}?`);
 
       if (userRSP === null) {
-        endGame = false;
-      } else {
-        const userIndex = rsp.indexOf(userRSP.toLowerCase());
-        if (userIndex !== -1) {
-          userRSP = userIndex;
-        } else {
-          return start();
-        }
+        gameExit(rspGame);
+        return;
       }
 
-      if (randomRSP === userRSP) {
+      if (userRSP.trim() === '') {
+        rspGame();
+        return;
+      }
+
+      const userIndex = rsp.indexOf(userRSP.toLowerCase());
+      if (userIndex === -1) {
+        rspGame();
+        return;
+      }
+
+      const randomRSP = getRandomIntInclusive(0, 2);
+
+      if (randomRSP === userIndex) {
         alert('Ничья');
-        start();
+        rspGame();
       }
 
-      if (userRSP !== null && (userRSP + 1) % 3 === randomRSP) {
+      if ((userIndex + 1) % 3 === randomRSP) {
         alert('Вы выиграли');
         gameNumbers();
       }
 
-      if ((randomRSP + 1) % 3 === userRSP) {
+      if (randomRSP !== userIndex && (userIndex + 1) % 3 !== randomRSP) {
         alert('Компьютер выиграл!');
         gameOddEven();
       }
 
-      confirm('Хотите сыграть еще?') ? newGame() : alert(`Конец!`);
+      if (exitCount < 1) {
+        const playAgain = confirm('Хотите сыграть еще?');
+        if (playAgain) {
+          playStart = true;
+          return newGame();
+        } else {
+          alert('Конец!');
+        }
+        exitCount++;
+      }
+    };
+
+    return function start() {
+      rspGame();
+
+      if (playStart) {
+        playStart = false;
+        start();
+      }
     };
   };
-  window.RPS = game;
+
+  window.MARBLES = game;
 })();
