@@ -33,16 +33,20 @@
     const processTurn = (userOdd, userNum) => {
       const random = Math.floor(Math.random() * 2) + 1;
       const isOdd = userNum % 2 !== 0;
-      const canGuessEven =
-        (numbersOfBalls.computer === 1 || numbersOfBalls.player === 1) && userNum === 2;
 
-      random === 1 && (isOdd || canGuessEven)
-        ? ((userNum = Math.min(numbersOfBalls.computer, numbersOfBalls.player, userNum)),
-          (numbersOfBalls.computer += userNum || userOdd),
-          (numbersOfBalls.player -= userNum || userOdd))
-        : ((userNum = Math.min(numbersOfBalls.computer, numbersOfBalls.player, userNum)),
-          (numbersOfBalls.player += userNum || userOdd),
-          (numbersOfBalls.computer -= userNum || userOdd));
+      const oneBallLeft = numbersOfBalls.computer === 1 || numbersOfBalls.player === 1;
+      const userChoseEven = userNum === 2;
+      const canGuessEven = oneBallLeft && userChoseEven;
+
+      if (random === 1 && (isOdd || canGuessEven)) {
+        userNum = Math.min(numbersOfBalls.computer, numbersOfBalls.player, userNum);
+        numbersOfBalls.computer += userNum || userOdd;
+        numbersOfBalls.player -= userNum || userOdd;
+      } else {
+        userNum = Math.min(numbersOfBalls.computer, numbersOfBalls.player, userNum);
+        numbersOfBalls.player += userNum || userOdd;
+        numbersOfBalls.computer -= userNum || userOdd;
+      }
     };
 
     const alertWindow = () =>
